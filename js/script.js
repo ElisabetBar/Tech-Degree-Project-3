@@ -215,8 +215,29 @@ submit.addEventListener('click', (e) => {
         emailField.className = 'error';
         nameLabel.innerHTML = "Name: (please provide name)";
         e.preventDefault();
-    } else {
+    } else if (email === /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) {
     	emailField.className = '';
+	}
+	
+	var activities = document.getElementsByClassName("activity");
+    var counter = 0;
+    var activityReminder = document.getElementById("activityReminder");
+    var lineBreak = document.getElementById("lineBreak");
+
+    for(var i = 0; i < activities.length; i++){
+    	if(activities[i].checked === true) {
+    		counter++;
+    	}
+    }
+
+    if(counter < 1){
+    	activityReminder.innerHTML = "Please select an Activity";
+    	activityReminder.style.color = "red";
+    	lineBreak.innerHTML = "<br>";
+    	e.preventDefault();
+    } if(counter >= 1){
+    	activityReminder.innerHTML = "";
+    	lineBreak.innerHTML = "";
     }
 
     var ccField = document.getElementById("cc-num");
@@ -231,10 +252,12 @@ submit.addEventListener('click', (e) => {
     }
 
     if (paymentMenu.value === 'paypal') {
-    	return true;
+		paypalDiv.className = '';
+		return true;
     }
     if (paymentMenu.value === 'bitcoin') {
-    	return true;
+		bitcoinDiv.className = '';
+		return true;
     }
 
     //check there's a zip code
@@ -255,27 +278,6 @@ submit.addEventListener('click', (e) => {
         cvv.className = ''
     }
 
-
-    var activities = document.getElementsByClassName("activity");
-    var counter = 0;
-    var activityReminder = document.getElementById("activityReminder");
-    var lineBreak = document.getElementById("lineBreak");
-
-    for(var i = 0; i < activities.length; i++){
-    	if(activities[i].checked === true) {
-    		counter++;
-    	}
-    }
-
-    if(counter < 1){
-    	activityReminder.innerHTML = "Please select an Activity";
-    	activityReminder.style.color = "red";
-    	lineBreak.innerHTML = "<br>";
-    	e.preventDefault();
-    } if(counter >= 1){
-    	activityReminder.innerHTML = "";
-    	lineBreak.innerHTML = "";
-    }
 });
 
 
